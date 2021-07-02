@@ -54,24 +54,42 @@ func GetUserName(c *gin.Context) string {
 	return ""
 }
 
-func GetRoleName(c *gin.Context) string {
+func GetRoleKeys(c *gin.Context) []string {
 	data := ExtractClaims(c)
-	if data["rolekey"] != nil {
-		return (data["rolekey"]).(string)
+	if data["roleKeys"] != nil {
+		return (data["roleKeys"]).([]string)
 	}
-	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " GetRoleName 缺少 rolekey")
-	return ""
+	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " GetRoleKeys 缺少 roleKeys")
+	return nil
 }
 
-func GetRoleId(c *gin.Context) int {
+func GetRoleIds(c *gin.Context) []int {
 	data := ExtractClaims(c)
-	if data["roleid"] != nil {
-		i := int((data["roleid"]).(float64))
-		return i
+	if data["roleIds"] != nil {
+		return (data["roleIds"]).([]int)
 	}
-	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " GetRoleId 缺少 roleid")
-	return 0
+	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " roleIds 缺少 roleIds")
+	return nil
 }
+
+//func GetRoleName(c *gin.Context) string {
+//	data := ExtractClaims(c)
+//	if data["rolekey"] != nil {
+//		return (data["rolekey"]).(string)
+//	}
+//	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " GetRoleName 缺少 rolekey")
+//	return ""
+//}
+//
+//func GetRoleId(c *gin.Context) int {
+//	data := ExtractClaims(c)
+//	if data["roleid"] != nil {
+//		i := int((data["roleid"]).(float64))
+//		return i
+//	}
+//	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " GetRoleId 缺少 roleid")
+//	return 0
+//}
 
 func GetDeptId(c *gin.Context) int {
 	data := ExtractClaims(c)
