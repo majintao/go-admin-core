@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"github.com/go-admin-team/go-admin-core/tools/utils"
 
 	"github.com/gin-gonic/gin"
 
@@ -57,7 +58,7 @@ func GetUserName(c *gin.Context) string {
 func GetRoleKeys(c *gin.Context) []string {
 	data := ExtractClaims(c)
 	if data["roleKeys"] != nil {
-		return (data["roleKeys"]).([]string)
+		return utils.ExtractStrArrFromInterface(data["roleKeys"])
 	}
 	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " GetRoleKeys 缺少 roleKeys")
 	return nil
@@ -66,7 +67,7 @@ func GetRoleKeys(c *gin.Context) []string {
 func GetRoleIds(c *gin.Context) []int {
 	data := ExtractClaims(c)
 	if data["roleIds"] != nil {
-		return (data["roleIds"]).([]int)
+		return utils.ExtractIntArrFromInterface(data["roleIds"])
 	}
 	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " roleIds 缺少 roleIds")
 	return nil
