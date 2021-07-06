@@ -67,7 +67,7 @@ func GetRoleKeys(c *gin.Context) []string {
 func GetRoleIds(c *gin.Context) []int {
 	data := ExtractClaims(c)
 	if data["roleIds"] != nil {
-		return utils.ExtractIntArrFromInterface(data["roleIds"])
+		return utils.ExtractIntArrFromFlaot64Interface(data["roleIds"])
 	}
 	fmt.Println(pkg.GetCurrentTimeStr() + " [WARING] " + c.Request.Method + " " + c.Request.URL.Path + " roleIds 缺少 roleIds")
 	return nil

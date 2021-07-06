@@ -41,3 +41,19 @@ func ExtractIntArrFromInterface(dataValue interface{}) []int {
 	}
 	return ints
 }
+
+func ExtractIntArrFromFlaot64Interface(dataValue interface{}) []int {
+	interfaceArrs, ok := dataValue.([]interface{})
+	if !ok {
+		return nil
+	}
+	ints := make([]int, 0, len(interfaceArrs))
+	for _, arr := range interfaceArrs {
+		s, ok1 := arr.(float64)
+		if !ok1 {
+			continue
+		}
+		ints = append(ints, int(s))
+	}
+	return ints
+}
