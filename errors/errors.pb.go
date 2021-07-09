@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.26.0
 // 	protoc        v3.12.0
-// source: errors.proto
+// source: errors.videoapi
 
 package errors
 
