@@ -2,6 +2,7 @@ package runtime
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 	"net/http"
 
 	"github.com/casbin/casbin/v2"
@@ -16,6 +17,10 @@ type Runtime interface {
 	SetDb(key string, db *gorm.DB)
 	GetDb() map[string]*gorm.DB
 	GetDbByKey(key string) *gorm.DB
+
+	// 这里管理grpc客户端链接配置
+	SetGrpcClients(map[string]*config.GrpcClient)
+	GetGrpcClients() map[string]*config.GrpcClient
 
 	SetCasbin(key string, enforcer *casbin.SyncedEnforcer)
 	GetCasbin() map[string]*casbin.SyncedEnforcer

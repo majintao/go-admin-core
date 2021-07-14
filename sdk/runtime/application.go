@@ -2,6 +2,7 @@ package runtime
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 	"net/http"
 	"sync"
 
@@ -26,6 +27,7 @@ type Application struct {
 	memoryQueue storage.AdapterQueue
 	handler     map[string][]func(r *gin.RouterGroup, hand ...*gin.HandlerFunc)
 	routers     []Router
+	grpcClients       map[string]*config.GrpcClient
 }
 
 type Router struct {
@@ -35,6 +37,19 @@ type Router struct {
 type Routers struct {
 	List []Router
 }
+
+func (e *Application) SetGrpcClients(grpcClients map[string]*config.GrpcClient) {
+	e.mux.Lock()
+	defer e.mux.Unlock()
+	e.grpcClients = grpcClients
+}
+
+func (e *Application) GetGrpcClients() map[string]*config.GrpcClient {
+	e.mux.Lock()
+	defer e.mux.Unlock()
+	return e.grpcClients
+}
+
 
 // SetDb 设置对应key的db
 func (e *Application) SetDb(key string, db *gorm.DB) {
@@ -127,6 +142,7 @@ func NewConfig() *Application {
 		memoryQueue: queue.NewMemory(10000),
 		handler:     make(map[string][]func(r *gin.RouterGroup, hand ...*gin.HandlerFunc)),
 		routers:     make([]Router, 0),
+		grpcClients: make(map[string]*config.GrpcClient),
 	}
 }
 
