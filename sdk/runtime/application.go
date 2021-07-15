@@ -3,6 +3,7 @@ package runtime
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
 	"sync"
 
@@ -28,6 +29,7 @@ type Application struct {
 	handler     map[string][]func(r *gin.RouterGroup, hand ...*gin.HandlerFunc)
 	routers     []Router
 	grpcClients       map[string]*config.GrpcClient
+	mongoClients map[string]*mongo.Client
 }
 
 type Router struct {
@@ -37,6 +39,19 @@ type Router struct {
 type Routers struct {
 	List []Router
 }
+
+func (e *Application) SetMongoClients(mongoClients map[string]*mongo.Client) {
+	e.mux.Lock()
+	defer e.mux.Unlock()
+	e.mongoClients = mongoClients
+}
+
+func (e *Application) GetMongoClients() map[string]*mongo.Client {
+	e.mux.Lock()
+	defer e.mux.Unlock()
+	return e.mongoClients
+}
+
 
 func (e *Application) SetGrpcClients(grpcClients map[string]*config.GrpcClient) {
 	e.mux.Lock()
@@ -143,6 +158,7 @@ func NewConfig() *Application {
 		handler:     make(map[string][]func(r *gin.RouterGroup, hand ...*gin.HandlerFunc)),
 		routers:     make([]Router, 0),
 		grpcClients: make(map[string]*config.GrpcClient),
+		mongoClients: make(map[string]*mongo.Client),
 	}
 }
 

@@ -55,6 +55,7 @@ type Config struct {
 	Locker      *Locker               `yaml:"locker"`
 	Extend      interface{}           `yaml:"extend"`
 	Grpc        *Grpc                 `yaml:"grpc"`
+	Mongo       *MongoSource          `yaml:"mongo"`
 }
 
 // 多db改造
@@ -84,6 +85,7 @@ func Setup(s source.Source,
 			Locker:      LockerConfig,
 			Extend:      ExtendConfig,
 			Grpc: GrpcConfig,
+			Mongo: MongoSourceObj,
 		},
 		callbacks: fs,
 	}

@@ -3,6 +3,7 @@ package runtime
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
 
 	"github.com/casbin/casbin/v2"
@@ -17,6 +18,10 @@ type Runtime interface {
 	SetDb(key string, db *gorm.DB)
 	GetDb() map[string]*gorm.DB
 	GetDbByKey(key string) *gorm.DB
+
+	// 这里管理mongo客户端链接配置
+	SetMongoClients(mongoConfigs map[string]*mongo.Client)
+	GetMongoClients() map[string]*mongo.Client
 
 	// 这里管理grpc客户端链接配置
 	SetGrpcClients(map[string]*config.GrpcClient)
